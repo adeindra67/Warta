@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface wartaTests : XCTestCase
+@interface projectAppsTests : XCTestCase
 
 @end
 
-@implementation wartaTests
+@implementation projectAppsTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

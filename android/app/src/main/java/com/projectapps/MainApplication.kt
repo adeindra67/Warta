@@ -1,4 +1,4 @@
-package com.warta
+package com.projectapps
 
 import android.app.Application
 import com.facebook.react.PackageList

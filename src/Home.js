@@ -11,7 +11,7 @@ const Berita = () =>{
 
     const getMovies = async () => {
         try {
-        const response = await fetch('https://newsapi.org/v2/everything?q=sports&pageSize=5&apiKey=6d4b261c262e4a51a4408f2e839d5530');
+        const response = await fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=899d3bc9552d47b68f7dc0785ef4023c');
         const json = await response.json();
         setData(json.articles);
         } catch (error) {
