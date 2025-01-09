@@ -1,61 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, BackHandler } from 'react-native';
+import { BackHandler } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import Home from './src/Home';
 import Berita from './src/Berita';
 import Onboarding from './src/Onboarding';
 import Popup from './src/Popup';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import ProfilScreen from './src/ProfilScreen';
 
 // Tipe parameter untuk navigasi stack
 type RootStackParamList = {
   Onboarding: undefined;
   Home: undefined;
-  Profile: { name: string; id: string };
-  About: undefined;
   Berita: { article: any };
+  Profil: undefined;
+  Popup: undefined; // Tambahkan tipe untuk Popup
 };
 
-// Komponen BeritaScreen
-type BeritaScreenProps = NativeStackScreenProps<RootStackParamList, 'Berita'>;
-
-// Deklarasi Stack Navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// Komponen Utama App
 const App = () => {
-  const [isPopupVisible, setPopupVisible] = useState(false);
-
-  useEffect(() => {
-    const backAction = () => {
-      if (isPopupVisible) {
-        setPopupVisible(false); // Tutup pop-up jika sedang terbuka
-      } else {
-        setPopupVisible(true); // Tampilkan pop-up
-      }
-      return true; // Mencegah aplikasi keluar langsung
-    };
-
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-
-    return () => backHandler.remove();
-  }, [isPopupVisible]);
-
-  const handleExit = () => {
-    BackHandler.exitApp(); // Keluar dari aplikasi
-  };
-
-  const handleCancel = () => {
-    setPopupVisible(false); // Tutup pop-up
-  };
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Onboarding">
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
-          options={{ headerShown: false }} // Hilangkan header untuk splash screen
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Home"
@@ -67,10 +39,17 @@ const App = () => {
           component={Berita}
           options={{ title: 'Halaman Berita' }}
         />
+        <Stack.Screen
+          name="Profil"
+          component={ProfilScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen  // Tambahkan screen untuk Popup
+          name="Popup"
+          component={Popup}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
-
-      {/* Pop-up konfirmasi keluar */}
-      <Popup visible={isPopupVisible} onCancel={handleCancel} onExit={handleExit} />
     </NavigationContainer>
   );
 };
